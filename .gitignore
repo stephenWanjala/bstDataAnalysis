@@ -1,2 +1,21 @@
+# Compiled object files
+*.o
+*.ko
+*.obj
+*.elf
 /.vscode
 /bst.o
+# Compiled dynamic libraries
+*.so
+*.dylib
+main
+# Executables
+*.exe
+*.out
+/main
+# Build directories
+build/
+bin/
+
+# Dependency directories
+deps/

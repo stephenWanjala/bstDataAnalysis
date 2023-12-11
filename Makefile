@@ -3,7 +3,7 @@ CC = g++
 CFLAGS = -Wall -g
 
 TARGET = main
-SRC = main.cpp
+SRC = main.c++
 
 $(TARGET): $(SRC)
 	$(CC) $(CFLAGS) -o $(TARGET) $(SRC)
