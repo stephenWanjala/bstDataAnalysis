@@ -1,11 +1,19 @@
-#include "Node.h"
+// TransactionNode.h
+#ifndef TRANSACTION_NODE_H
+#define TRANSACTION_NODE_H
 
-class TransactionNode : public Node<string> {
+#include "Node.hpp"
+
+class TransactionNode : public Node {
 private:
     int mUnits;
 
 public:
-    TransactionNode(string data, int units);
+    TransactionNode(const std::string& data, int units);
+
     int getUnits() const;
+
     void printData() const override;
 };
+
+#endif // TRANSACTION_NODE_H

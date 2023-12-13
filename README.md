@@ -27,7 +27,7 @@ make
 Run the compiled program:
 
 ```bash
-./main
+./bstc
 ```
 The program will read data from a file named data.csv in the same directory. Ensure the CSV file is formatted correctly.
 Data Format

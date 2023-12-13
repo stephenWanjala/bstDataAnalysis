@@ -3,18 +3,29 @@
 *.ko
 *.obj
 *.elf
-/.vscode
-/bst.o
+*.dylib
+
 # Compiled dynamic libraries
 *.so
-*.dylib
-main
+
 # Executables
 *.exe
 *.out
-/main
-# Build directories
+
+# CMake build directory
 build/
+CMakeFiles/
+CMakeScripts/
+Testing/
+cmake-build-debug
+bstC
+# Visual Studio Code
+.vscode/
+
+# Clion
+.idea/
+.idea
+# Binary directory
 bin/
 
 # Dependency directories

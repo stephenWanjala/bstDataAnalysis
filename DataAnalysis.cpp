@@ -1,7 +1,7 @@
+// DataAnalysis.cpp
 #include "DataAnalysis.h"
-#include <iostream>
-#include "Node.h"
-#include <sstream>
+
+#include "TransactionNode.h"
 
 DataAnalysis::DataAnalysis() {
     openFile();
@@ -13,40 +13,68 @@ DataAnalysis::~DataAnalysis() {
 
 void DataAnalysis::openFile() {
     mCsvStream.open("data.csv");
+    if (!mCsvStream.is_open()) {
+        std::cerr << "Error opening the file." << std::endl;
+        exit(EXIT_FAILURE);
+    }
 }
 
 void DataAnalysis::readLineAndSplit() {
-    std::string line, type, transaction;
-    int units;
+    std::string line;
+    int lineNumber = 0;
+
+    if (getline(mCsvStream, line)) {
+        lineNumber++;
+    }
 
     while (getline(mCsvStream, line)) {
-        std::stringstream ss(line);
-        getline(ss, type, ',');
-        ss >> units;
-        getline(ss, transaction, ',');
+        lineNumber++;
 
-        processTransaction(type, units, transaction);
+        try {
+            boost::tokenizer<> tokenizer(line);
+            auto it = tokenizer.begin();
+            int units = stoi(*it++);
+            std::string type = *it++;
+            std::string transaction = *it;
+
+            processTransaction(type, units, transaction);
+        } catch (const std::invalid_argument& e) {
+            std::cerr << "Error converting units to integer in line " << lineNumber << ": " << e.what() << std::endl;
+        }
     }
 }
 
 void DataAnalysis::processTransaction(const std::string& type, int units, const std::string& transaction) {
-    if (type == "Sold") {
-        mTreeSold.insert(transaction);
-    } else if (type == "Purchased") {
-        mTreePurchased.insert(transaction);
+    try {
+        TransactionNode node(type, units);
+
+        if (transaction == "Sold") {
+            mTreeSold.insert(type);
+        } else if (transaction == "Purchased") {
+            mTreePurchased.insert(type);
+        }
+    } catch (const std::invalid_argument& e) {
+        std::cerr << "Error converting units to integer: " << e.what() << std::endl;
     }
 }
 
 void DataAnalysis::displayTrees() {
+    std::cout << "Products Sold:\n";
     mTreeSold.inorder();
+    std::cout << "\nProducts Purchased:\n";
     mTreePurchased.inorder();
 }
 
 void DataAnalysis::displayTrends() {
-    std::cout << "Least sold: " << mTreeSold.findSmallest().data << std::endl;
-    std::cout << "Most sold: " << mTreeSold.findLargest().data << std::endl;
-    std::cout << "Least purchased: " << mTreePurchased.findSmallest().data << std::endl;
-    std::cout << "Most purchased: " << mTreePurchased.findLargest().data << std::endl;
+    std::cout << "Least Sold: ";
+    mTreeSold.findSmallest().printData();
+    std::cout << "Most Sold: ";
+    mTreeSold.findLargest().printData();
+
+    std::cout << "Least Purchased: ";
+    mTreePurchased.findSmallest().printData();
+    std::cout << "Most Purchased: ";
+    mTreePurchased.findLargest().printData();
 }
 
 void DataAnalysis::runAnalysis() {

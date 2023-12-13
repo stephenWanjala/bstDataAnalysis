@@ -1,14 +1,8 @@
-#include "Node.h"
-#include <string>
-# include <iostream>
-template <typename data_t>
-Node<data_t>::Node(data_t d) : data(d), left(nullptr), right(nullptr) {}
+// Node.cpp
+#include "Node.hpp"
 
-template <typename data_t>
-void Node<data_t>::printData() const {
+Node::Node(const std::string& d) : data(d), left(nullptr), right(nullptr) {}
+
+void Node::printData() const {
     std::cout << data << " ";
 }
-
-// Explicit instantiation for necessary types
-template class Node<int>;
-template class Node<std::string>;

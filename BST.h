@@ -1,25 +1,52 @@
-#include <iostream>
+// BST.h
+#ifndef BST_H
+#define BST_H
 
-template <typename data_t>
-class Node;
+#include "Node.hpp"
 
-template <typename data_t>
 class BST {
 private:
-    Node<data_t>* root;
-    Node<data_t>* insert(Node<data_t>* node, data_t data);
-    Node<data_t>* search(Node<data_t>* node, data_t data);
-    void inorder(Node<data_t>* node);
-    void printDataHelper(const Node<data_t>* node) const;
-    Node<data_t>* findSmallestHelper(Node<data_t>* node);
-    Node<data_t>* findLargestHelper(Node<data_t>* node);
+    Node* root; // pointer to root node
+
+    // helper function to insert a node recursively
+    Node* insert(Node* node, const std::string& data);
+
+    // helper function to search for a node recursively
+    Node* search(Node* node, const std::string& data);
+
+    // helper function to traverse the tree in order recursively
+    void inorder(Node* node);
+
+    // Helper function to print data of type string
+    void printDataHelper(const Node* node) const;
+
+    // Helper function to find the smallest node in the tree
+    Node* findSmallestHelper(Node* node);
+
+    // Helper function to find the largest node in the tree
+    Node* findLargestHelper(Node* node);
 
 public:
+    // constructor
     BST();
-    void insert(data_t data);
-    bool search(data_t data);
+
+    // insert a data into the tree
+    void insert(const std::string& data);
+
+    // search for a data in the tree
+    bool search(const std::string& data);
+
+    // traverse the tree in order and print the data
     void inorder();
-    void printData() const;
-    Node<data_t>& findSmallest();
-    Node<data_t>& findLargest();
+
+    // virtual function to print the data
+    virtual void printData() const;
+
+    // Function to find the smallest node in the tree
+    Node& findSmallest();
+
+    // Function to find the largest node in the tree
+    Node& findLargest();
 };
+
+#endif // BST_H
